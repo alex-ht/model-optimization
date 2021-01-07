@@ -182,7 +182,7 @@ class Conv2DBatchNormQuantize(transforms.Transform):
       return bn_layer_node
 
     conv_layer_node.layer['config']['activation'] = \
-      keras.activations.serialize(quantize_aware_activation.NoOpActivation())
+      keras.activations.serialize(quantize_aware_activation.NoOpActivation)
     bn_layer_node.metadata['quantize_config'] = \
       default_8bit_quantize_configs.Default8BitOutputQuantizeConfig()
 
@@ -236,7 +236,7 @@ class Conv2DBatchNormReLUQuantize(Conv2DBatchNormQuantize):
       return relu_layer_node
 
     conv_layer_node.layer['config']['activation'] = \
-      keras.activations.serialize(quantize_aware_activation.NoOpActivation())
+      keras.activations.serialize(quantize_aware_activation.NoOpActivation)
     bn_layer_node.metadata['quantize_config'] = \
       default_8bit_quantize_configs.NoOpQuantizeConfig()
 

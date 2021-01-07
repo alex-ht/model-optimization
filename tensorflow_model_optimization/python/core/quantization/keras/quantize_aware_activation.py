@@ -21,40 +21,12 @@ from __future__ import print_function
 import tensorflow as tf
 
 from tensorflow_model_optimization.python.core.keras import utils
-
 activations = tf.keras.activations
 
+from tensorflow.keras.utils import get_custom_objects
 
-class NoOpActivation(object):
-  """No-op activation which simply returns the incoming tensor.
-
-  This activation is required to distinguish between `keras.activations.linear`
-  which does the same thing. The main difference is that NoOpActivation should
-  not have any quantize operation applied to it.
-  """
-  
-  @staticmethod
-  def _name(activation):
-    if hasattr(activation, '__name__'):
-      return activation.__name__
-    return activation.__class__.__name__
-
-  def __call__(self, x):
-    return x
-
-  def get_config(self):
-    return {}
-
-  def __eq__(self, other):
-    if not other or not isinstance(other, NoOpActivation):
-      return False
-
-    return True
-
-  def __ne__(self, other):
-    """Ensure this works on Python2."""
-    return not self.__eq__(other)
-
+def NoOpActivation(x):
+  return activations.linear(x)
 
 class QuantizeAwareActivation(object):
   """Activation wrapper for quantization aware training.
