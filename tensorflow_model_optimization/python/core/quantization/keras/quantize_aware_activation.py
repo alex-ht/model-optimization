@@ -32,6 +32,12 @@ class NoOpActivation(object):
   which does the same thing. The main difference is that NoOpActivation should
   not have any quantize operation applied to it.
   """
+  
+  @staticmethod
+  def _name(activation):
+    if hasattr(activation, '__name__'):
+      return activation.__name__
+    return activation.__class__.__name__
 
   def __call__(self, x):
     return x
